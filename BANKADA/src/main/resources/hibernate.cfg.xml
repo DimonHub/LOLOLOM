@@ -1,11 +1,16 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bankjava</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bankdb</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">123456787188</property>
-        <mapping class="bankher.Client"/>
+        <mapping class="bankdb.Klient"/>
+        <mapping class="bankdb.Pracownik" />
+        <mapping class="bankdb.Konto" />
+        <mapping class="bankdb.Adres" />
+        <mapping class="bankdb.Pozyczka" />
+        <mapping class="bankdb.Rata" />
     </session-factory>
 </hibernate-configuration>
