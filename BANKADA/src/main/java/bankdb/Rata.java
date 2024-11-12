@@ -1,16 +1,19 @@
 package bankdb;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
-@Entity
-@Table(name = "raty")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "raty")
 public class Rata {
 
     @Id
@@ -18,17 +21,19 @@ public class Rata {
     @Column(name = "rata_id")
     private int rataId;
 
-    @Column(name = "pozyczka_id")
-    private int pozyczkaId;
+    @ManyToOne
+    @JoinColumn(name = "pozyczka_id", referencedColumnName = "pozyczka_id", insertable = false, updatable = false)
+    private Pozyczki pozyczka;
 
     @Column(name = "kwota_raty")
     private double kwotaRaty;
 
     @Column(name = "data_splaty")
-    private Date dataSplaty;
+    private LocalDate dataSplaty;
 
+    @Column(name = "status_splaty")
+    private String statusSplaty;
 
-    public void setCurrentDateAsDataSplaty() {
-        this.dataSplaty = new Date(System.currentTimeMillis());
-    }
+    @Column(name = "procent")
+    private double procent;
 }

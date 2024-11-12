@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="bank-pu" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Укажите здесь все ваши классы сущностей -->
+        <class>bankdb.Pozyczki</class>
+        <class>bankdb.Rata</class>
+        <class>bankdb.Klient</class>
+        <class>bankdb.Pracownik</class>
+        <class>bankdb.Adres</class>
+        <class>bankdb.Konto</class>
+
+        <!-- Здесь могут быть и другие классы сущностей, если они есть -->
+
+        <properties>
+            <!-- Настройки Hibernate и базы данных -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/> <!-- update - автоматическое создание таблиц -->
+            <property name="hibernate.show_sql" value="true"/> <!-- отображать SQL-запросы -->
+            <property name="hibernate.format_sql" value="true"/> <!-- красиво форматировать SQL-запросы -->
+
+            <!-- Настройки подключения к базе данных -->
+            <property name="hibernate.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.jdbc.url" value="jdbc:mysql://localhost:3306/bankdb"/>
+            <property name="hibernate.jdbc.username" value="root"/>
+            <property name="hibernate.jdbc.password" value="123456787188"/>
+        </properties>
+    </persistence-unit>
+</persistence>

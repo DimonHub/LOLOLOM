@@ -10,7 +10,7 @@
         <mapping class="bankdb.Pracownik" />
         <mapping class="bankdb.Konto" />
         <mapping class="bankdb.Adres" />
-        <mapping class="bankdb.Pozyczka" />
+        <mapping class="bankdb.Pozyczki" />
         <mapping class="bankdb.Rata" />
     </session-factory>
 </hibernate-configuration>
