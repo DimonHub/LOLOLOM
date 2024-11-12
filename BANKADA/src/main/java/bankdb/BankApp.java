@@ -4,7 +4,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+
+
 
 public class BankApp {
 
@@ -44,7 +50,6 @@ public class BankApp {
         }
     }
 
-
     public static void addClient(Scanner scanner) {
         System.out.println("Podaj imię klienta:");
         String imie = scanner.nextLine();
@@ -56,9 +61,7 @@ public class BankApp {
         String dataUrodzeniaStr = scanner.nextLine();
         Date dataUrodzenia = Date.valueOf(dataUrodzeniaStr);
 
-
         Klient klient = new Klient(imie, nazwisko, pesel, dataUrodzenia);
-
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -71,7 +74,6 @@ public class BankApp {
         }
     }
 
-
     public static void addKonto(Scanner scanner) {
         System.out.println("Podaj klienta (ID klienta):");
         int klientId = scanner.nextInt();
@@ -83,12 +85,9 @@ public class BankApp {
         String dataOtwarciaStr = scanner.nextLine();
         Date dataOtwarcia = Date.valueOf(dataOtwarciaStr);
 
-
         String waluta = "PLN";
 
-
         Konto konto = new Konto(klientId, waluta, saldo, dataOtwarcia);
-
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
@@ -100,52 +99,53 @@ public class BankApp {
         }
     }
 
-
     public static void addPozyczka(Scanner scanner) {
         System.out.println("Podaj klienta (ID klienta):");
         int klientId = scanner.nextInt();
-
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            Klient klient = session.get(Klient.class, klientId);
-            if (klient == null) {
-                System.out.println("Klient o podanym ID nie istnieje w bazie danych!");
-                return;
-            }
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println("Błąd podczas sprawdzania klienta: " + e.getMessage());
-            return;
-        }
-
         System.out.println("Podaj pracownika (ID pracownika):");
         int pracownikId = scanner.nextInt();
         System.out.println("Podaj kwotę pożyczki:");
         double kwota = scanner.nextDouble();
-        System.out.println("Podaj okres pożyczki w miesiącach:");
+        System.out.println("Podaj okres pożyczki (w miesiącach):");
         int okresMiesiecy = scanner.nextInt();
-        System.out.println("Podaj datę pożyczki (yyyy-mm-dd):");
         scanner.nextLine();
+        System.out.println("Podaj datę pożyczki (yyyy-mm-dd):");
         String dataPozyczkiStr = scanner.nextLine();
-        Date dataPozyczki = Date.valueOf(dataPozyczkiStr);
+        LocalDate dataPozyczki = LocalDate.parse(dataPozyczkiStr);
 
-
-        Pozyczka pozyczka = new Pozyczka();
+        Pozyczki pozyczka = new Pozyczki();
         pozyczka.setKlientId(klientId);
         pozyczka.setPracownikId(pracownikId);
         pozyczka.setKwota(kwota);
         pozyczka.setOkresMiesiecy(okresMiesiecy);
         pozyczka.setDataPozyczki(dataPozyczki);
 
+        Rata rata = new Rata();
+        rata.setKwotaRaty(kwota / okresMiesiecy);
+        rata.setDataSplaty(dataPozyczki.plusMonths(1));
+        rata.setStatusSplaty("NIESPLACONA");
+        rata.setProcent(5);
+
+
+        List<Rata> ratyList = new ArrayList<>();
+        ratyList.add(rata);
+
+
+        pozyczka.setRaty(ratyList); // Сохраняем первую рату
+
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             session.save(pozyczka);
-            session.getTransaction().commit();
+            transaction.commit();
+            System.out.println("Pożyczka z ratą została dodana pomyślnie!");
         } catch (Exception e) {
             System.out.println("Błąd podczas dodawania pożyczki: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
+
 
 
 
@@ -163,16 +163,14 @@ public class BankApp {
         String dataZatrudnieniaStr = scanner.nextLine();
         Date dataZatrudnienia = Date.valueOf(dataZatrudnieniaStr);
 
-
-        System.out.println("Podaj ulicę adresu:");
+        System.out.println("Podaj ulicę:");
         String ulica = scanner.nextLine();
-        System.out.println("Podaj miasto adresu:");
+        System.out.println("Podaj miasto:");
         String miasto = scanner.nextLine();
         System.out.println("Podaj kod pocztowy adresu:");
         String kodPocztowy = scanner.nextLine();
-        System.out.println("Podaj kraj adresu:");
+        System.out.println("Podaj kraj:");
         String kraj = scanner.nextLine();
-
 
         Adres adres = new Adres();
         adres.setUlica(ulica);
@@ -180,19 +178,15 @@ public class BankApp {
         adres.setKodPocztowy(kodPocztowy);
         adres.setKraj(kraj);
 
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             session.save(adres);
             transaction.commit();
             System.out.println("Adres został dodany pomyślnie!");
 
-
             int adresId = adres.getAdresId();
 
-
             Pracownik pracownik = new Pracownik(imie, nazwisko, pesel, dataZatrudnienia, adresId);
-
 
             Transaction transaction2 = session.beginTransaction();
             session.save(pracownik);
@@ -203,7 +197,4 @@ public class BankApp {
             e.printStackTrace();
         }
     }
-
-
 }
-
