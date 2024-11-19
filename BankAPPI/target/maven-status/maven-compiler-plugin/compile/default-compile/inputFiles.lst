@@ -1,0 +1,11 @@
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\BankAppiApplication.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\config\JpaConfig.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\controller\KlientController.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\controller\PozyczkiController.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\entity\Klient.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\entity\Konto.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\entity\Pozyczki.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\repository\KlientRepository.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\repository\PozyczkiRepository.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\service\KlientService.java
+C:\Users\Dima\Downloads\BankAPPI\src\main\java\com\dima\BankAPPI\service\PozyczkiService.java

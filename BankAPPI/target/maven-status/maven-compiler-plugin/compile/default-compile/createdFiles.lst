@@ -1,0 +1,8 @@
+com\dima\BankAPPI\entity\Pozyczki.class
+com\dima\BankAPPI\entity\Konto.class
+com\dima\BankAPPI\BankAppiApplication.class
+com\dima\BankAPPI\controller\KlientController.class
+com\dima\BankAPPI\entity\Klient.class
+com\dima\BankAPPI\repository\KlientRepository.class
+com\dima\BankAPPI\service\KlientService.class
+com\dima\BankAPPI\config\JpaConfig.class
